@@ -1,0 +1,14 @@
+
+<div ng-controller='TicCtrl'>
+<h1>Tic - Tac - Toe</h1>
+     <div class='wrap' >
+      <div class='box, tile' ng-repeat='row in boxes'> 
+        <div class='box, tile' ng-click='play(box)' ng-repeat= 'box in row'>
+          {{box.value}}
+        </div>
+      </div>
+     </div>
+     <div class='footer'>
+       <button id='new'>New</button>
+       &nbsp;Turn: <span id='turns'></span> 
+     </div>
