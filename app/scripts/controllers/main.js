@@ -1,31 +1,33 @@
 'use strict';
 console.log("line 2 works");
-var newTic = angular.module('newTicApp', ['firebase']);
-function TicCtrl($scope, angularFire){
-  console.log("line 5 works");
+angular.module('newTicApp', ['firebase'])
+.controller('TicCtrl', function($scope, angularFire){
+    console.log("line 5 works");
 
-  $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
-  [{value: ""}, {value: ""}, {value: ""}],
-  [{value: ""}, {value: ""}, {value: ""}]];
+    var url =new Firebase('https://newtic.firebaseio.com/');
 
-  var myRootRef = new Firebase('https://newtic.firebaseio.com/');
+    angularFire(url, $scope, "boxes").then(function(){
 
-  angularFire(myRootRef, $scope, "boxes");
+      $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
+      [{value: ""}, {value: ""}, {value: ""}],
+      [{value: ""}, {value: ""}, {value: ""}]];
 
-  $scope.turn = 1;
-  
-  $scope.myRootRef.set($scope.boxes);
+      $scope.turn = 1;
+    
+      // $scope.myRootRef.set($scope.boxes);
 
-  $scope.play= function(cell){
-    console.log("play() works");
-    if($scope.turn % 2 == 0){
-      cell.value="X";
-    }
-    else{
-      cell.value="O";
-    }
-    $scope.turn++;
-  }; 
+      $scope.play= function(cell){
+        console.log("play() works");
+        if($scope.turn % 2 == 0){
+          cell.value="X";
+        }
+        else{
+          cell.value="O";
+        }
+        $scope.turn++;
+      };   
+    });
+  });
 
   
 
@@ -38,7 +40,7 @@ function TicCtrl($scope, angularFire){
       // $scope.clear=function(cell){
 
       // };
-  };
+
 
 // document.getElementsByClassName("tile").onclick=function(){
 
