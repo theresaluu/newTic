@@ -1,33 +1,35 @@
 'use strict';
+console.log("line 2 works");
+var newTic = angular.module('newTicApp', ['firebase']);
+function TicCtrl($scope, angularFire){
+  console.log("line 5 works");
 
-var newTic = angular.module('newTicApp', ['firebase'])
-  .controller('TicCtrl', [
-    '$scope', 
-    'angularFire',
-    '$cookies',
-     function($scope, angularFire, $cookies){
+  $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
+  [{value: ""}, {value: ""}, {value: ""}],
+  [{value: ""}, {value: ""}, {value: ""}]];
 
-      var myRootRef = new Firebase('https://newtic.firebaseio.com/');
+  var myRootRef = new Firebase('https://newtic.firebaseio.com/');
+
+  angularFire(myRootRef, $scope, "boxes");
+
+  $scope.turn = 1;
   
-      $scope.turn = 1;
+  $scope.myRootRef.set($scope.boxes);
 
-      $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
-      [{value: ""}, {value: ""}, {value: ""}],
-      [{value: ""}, {value: ""}, {value: ""}]];
+  $scope.play= function(cell){
+    console.log("play() works");
+    if($scope.turn % 2 == 0){
+      cell.value="X";
+    }
+    else{
+      cell.value="O";
+    }
+    $scope.turn++;
+  }; 
 
-      angularFire(myRootRef, $scope, "boxes");
+  
 
-      $scope.myRootRef.set($scope.boxes);
-
-      $scope.play= function(cell){
-        if($scope.turn % 2 == 0){
-          cell.value="X";
-        }
-        else{
-          cell.value="O";
-        }
-        $scope.turn++;
-      }; 
+      
 
       // $scope.win=function(cell){
 
@@ -36,7 +38,7 @@ var newTic = angular.module('newTicApp', ['firebase'])
       // $scope.clear=function(cell){
 
       // };
-    }]);
+  };
 
 // document.getElementsByClassName("tile").onclick=function(){
 
