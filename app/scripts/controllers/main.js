@@ -1,13 +1,13 @@
 'use strict';
 console.log("line 2 works");
-angular.module('newTicApp', ['firebase'])
-.controller('TicCtrl', function($scope, angularFire){
+angular.module('newTicApp')
+.controller('TicCtrl', ['$scope', 'angularFire', function($scope, angularFire){
     console.log("line 5 works");
 
-    var url =new Firebase('https://newtic.firebaseio.com/');
+    var url ='https://newtic.firebaseio.com/';
+    var promise = angularFire(url, $scope, "boxes");
 
-    angularFire(url, $scope, "boxes").then(function(){
-
+    promise.then(function(){
       $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
       [{value: ""}, {value: ""}, {value: ""}],
       [{value: ""}, {value: ""}, {value: ""}]];
@@ -27,7 +27,7 @@ angular.module('newTicApp', ['firebase'])
         $scope.turn++;
       };   
     });
-  });
+  }]);
 
   
 
