@@ -1,32 +1,34 @@
 'use strict';
-console.log("line 2 works");
 angular.module('newTicApp')
 .controller('TicCtrl', ['$scope', 'angularFire', function($scope, angularFire){
-    console.log("line 5 works");
 
-    var url ='https://newtic.firebaseio.com/';
-    var promise = angularFire(url, $scope, "boxes");
+    var url =new Firebase('https://newtic.firebaseio.com');
+  
+    var promise = angularFire(url, $scope, "games");
 
     promise.then(function(){
-      $scope.boxes = [[{value: ""}, {value: ""}, {value: ""}], 
+      $scope.games= {
+
+        boxes: [[{value: ""}, {value: ""}, {value: ""}], 
       [{value: ""}, {value: ""}, {value: ""}],
-      [{value: ""}, {value: ""}, {value: ""}]];
+      [{value: ""}, {value: ""}, {value: ""}]],
 
-      $scope.turn = 1;
-    
-      // $scope.myRootRef.set($scope.boxes);
-
+        turn: 1
+      };
+     
       $scope.play= function(cell){
         console.log("play() works");
-        if($scope.turn % 2 == 0){
+        if($scope.games.turn % 2 == 0){
           cell.value="X";
+
         }
         else{
           cell.value="O";
         }
-        $scope.turn++;
+        $scope.games.turn++;
       };   
     });
+
   }]);
 
   
