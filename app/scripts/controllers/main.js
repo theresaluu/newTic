@@ -4,7 +4,7 @@ angular.module('newTicApp')
 
     var url =new Firebase('https://newtic.firebaseio.com');
   
-    var promise = angularFire(url, $scope, "games");
+    var promise = angularFire(url, $scope, "games", {});
 
     promise.then(function(){
       $scope.games= {
